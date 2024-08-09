@@ -453,6 +453,7 @@ class PolyMaker:
 
         DP: int, optional,
             Degree of polymerization, by default 2
+            If optional column 'DP' is present in reactant dataframe, the DP is taken from the reactant dataframe
 
         mechanism: string,
             vinyl: performs addition reaction vinyl or acrylate groups
@@ -518,7 +519,7 @@ class PolyMaker:
             returnpoly[["smiles_polymer", "mechanism"]] = apply_method(
                 lambda row: self.__polymerizemechanism_thermoplastic(
                     ast.literal_eval(row.monomers),
-                    DP,
+                    row.DP if 'DP' in row else DP,
                     row.mechanism,
                     ast.literal_eval(row.distribution),
                     infinite_chain,
@@ -529,7 +530,7 @@ class PolyMaker:
             returnpoly[["smiles_polymer", "mechanism"]] = apply_method(
                 lambda row: self.__polymerizemechanism_thermoplastic(
                     ast.literal_eval(row.monomers),
-                    DP,
+                    row.DP if 'DP' in row else DP,
                     mechanism,
                     ast.literal_eval(row.distribution),
                     infinite_chain,
